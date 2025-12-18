@@ -1,0 +1,261 @@
+/* =========================================================
+   PAGE TRANSITIONS
+========================================================= */
+.page-fade {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   CARD INTERACTIONS
+========================================================= */
+.card-hover {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+}
+
+/* Prevent hover lift on mobile */
+@media (hover: none) {
+  .card-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* =========================================================
+   BUTTON PRESS EFFECT
+========================================================= */
+.btn-hover {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-hover:active {
+  transform: scale(0.97);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18) inset;
+}
+
+/* =========================================================
+   SKELETON LOADING (API / PRICE CHECK)
+========================================================= */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #e5e7eb 25%,
+    #f3f4f6 37%,
+    #e5e7eb 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-animation 1.25s infinite ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes skeleton-animation {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* Skeleton presets */
+.skeleton-text {
+  height: 16px;
+  margin-bottom: 6px;
+}
+.skeleton-title {
+  height: 24px;
+  width: 60%;
+  margin-bottom: 10px;
+}
+.skeleton-img {
+  height: 140px;
+  border-radius: 14px;
+}
+
+/* =========================================================
+   GLOBAL COLOR SYSTEM (LIGHT / DARK SAFE)
+========================================================= */
+
+/* Page background */
+body {
+  background-color: #f3f4f6;
+}
+.dark body {
+  background-color: #0f172a;
+}
+
+/* Cards */
+.card,
+.bg-white {
+  background-color: #ffffff;
+}
+.dark .card,
+.dark .bg-white {
+  background-color: #1e293b;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #111827;
+}
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: #e5e7eb;
+}
+
+/* Body text */
+p, span, label, li {
+  color: #374151;
+}
+.dark p,
+.dark span,
+.dark label,
+.dark li {
+  color: #d1d5db;
+}
+
+/* =========================================================
+   FORM ELEMENTS
+========================================================= */
+input,
+select,
+textarea {
+  background-color: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 10px 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0A84D0;
+  box-shadow: 0 0 0 3px rgba(10, 132, 208, 0.15);
+}
+
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #334155;
+  color: #e5e7eb;
+  border-color: #475569;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+.btn-primary {
+  background-color: #0A84D0;
+  color: #ffffff;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0669A6;
+  box-shadow: 0 8px 20px rgba(10, 132, 208, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  border-radius: 14px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: #f9fafb;
+}
+
+.dark .btn-outline {
+  border-color: #475569;
+  color: #e5e7eb;
+}
+
+.dark .btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* =========================================================
+   TABLES
+========================================================= */
+table {
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.dark table {
+  background-color: #1e293b;
+}
+
+table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.dark table th {
+  background-color: #0f172a;
+}
+
+/* =========================================================
+   STICKY PRICE SIDEBAR SAFETY
+========================================================= */
+.price-sticky {
+  position: sticky;
+  top: 96px;
+  z-index: 20;
+}
+
+/* =========================================================
+   UTILITIES (TRIP.COM STYLE POLISH)
+========================================================= */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+}
+.dark .divider {
+  background: linear-gradient(to right, transparent, #334155, transparent);
+}
+
+.pill {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  background: rgba(10, 132, 208, 0.12);
+  color: #0A84D0;
+}
+.dark .pill {
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+}

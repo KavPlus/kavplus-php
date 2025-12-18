@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #F5F9FF;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.container.single {
+    grid-template-columns: 1fr;
+}
+
+.card, .summary-card {
+    background: #fff;
+    border: 1px solid #E0E6F0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+h2, h3 {
+    color: #0A4D8C;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.primary-btn {
+    background: #1E88E5;
+    color: #fff;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background: #1565C0;
+}
+
+.sticky {
+    position: sticky;
+    top: 20px;
+}
+
+.seat-grid button {
+    margin: 4px;
+    padding: 10px;
+}
+
+.seat-grid .selected {
+    background: #1E88E5;
+    color: #fff;
+}
+
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}

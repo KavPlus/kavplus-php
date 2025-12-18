@@ -1,0 +1,124 @@
+/* ===== Page Fade In ===== */
+.page-fade {
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Card Hover Lift ===== */
+.card-hover {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* ===== Button Press Effect ===== */
+.btn-hover {
+    transition: transform 0.15s ease;
+}
+
+.btn-hover:active {
+    transform: scale(0.97);
+}
+
+/* ===== Skeleton Loading ===== */
+.skeleton {
+    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+    background-size: 200%;
+    animation: skeleton-animation 1.2s infinite ease;
+    border-radius: 8px;
+}
+
+@keyframes skeleton-animation {
+    from { background-position: 200%; }
+    to   { background-position: -200%; }
+}
+
+/* Skeleton presets */
+.skeleton-text { height: 16px; margin-bottom: 6px; }
+.skeleton-title { height: 24px; width: 60%; margin-bottom: 10px; }
+.skeleton-img { height: 140px; }
+/* ===== GLOBAL DARK MODE FIX ===== */
+
+/* Page background */
+body {
+  background-color: #f3f4f6;
+}
+.dark body {
+  background-color: #0f172a;
+}
+
+/* Cards */
+.card,
+.bg-white {
+  background-color: #ffffff;
+}
+.dark .card,
+.dark .bg-white {
+  background-color: #1e293b;
+}
+
+/* Text defaults */
+h1,h2,h3,h4,h5,h6 {
+  color: #111827;
+}
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: #e5e7eb;
+}
+
+p,span,label,li {
+  color: #374151;
+}
+.dark p,
+.dark span,
+.dark label,
+.dark li {
+  color: #d1d5db;
+}
+
+/* Inputs */
+input, select, textarea {
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+}
+.dark input,
+.dark select,
+.dark textarea {
+  background: #334155;
+  color: #e5e7eb;
+  border-color: #475569;
+}
+
+/* Buttons */
+.btn-primary {
+  background: #0A84D0;
+  color: white;
+}
+.btn-outline {
+  border: 1px solid #e5e7eb;
+  color: #374151;
+}
+.dark .btn-outline {
+  border-color: #475569;
+  color: #e5e7eb;
+}
+
+/* Tables */
+table {
+  background: white;
+}
+.dark table {
+  background: #1e293b;
+}
