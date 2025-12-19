@@ -1,37 +1,3 @@
-<?php
-require_once __DIR__ . "/session.php";
-
-$user     = $_SESSION['user'] ?? null;
-$isLogged = !empty($_SESSION['user_id']);
-$name     = $user['name'] ?? '';
-$firstName = explode(' ', trim($name))[0] ?? '';
-?>
-
-// -----------------------------
-// INCLUDE CURRENCY LOGIC EARLY
-// -----------------------------
-require_once __DIR__ . "/currency.php";
-
-// -----------------------------
-// USER STATE
-// -----------------------------
-$user     = $_SESSION['user'] ?? null;
-$isLogged = !empty($_SESSION['user_id']);
-$name     = $user['name'] ?? '';
-$role     = $user['role'] ?? 'user';
-
-// -----------------------------
-// TIME GREETING
-// -----------------------------
-$hour = (int) date('H');
-if ($hour >= 5 && $hour < 12)      $greeting = "Good morning";
-elseif ($hour < 17)               $greeting = "Good afternoon";
-elseif ($hour < 22)               $greeting = "Good evening";
-else                              $greeting = "Good night";
-
-$firstName = trim(explode(" ", $name)[0] ?? '');
-?>
-
 <!-- EARLY THEME APPLY (NO FLASH) -->
 <script>
 (function () {
@@ -107,12 +73,12 @@ $firstName = trim(explode(" ", $name)[0] ?? '');
         <?= htmlspecialchars("$greeting, $firstName"); ?>
       </span>
 
-      <a href="my-bookings.php" class="hover:text-[#0097D7]">
+      <a href="/my-bookings.php" class="hover:text-[#0097D7]">
         My Bookings
       </a>
     <?php endif; ?>
 
-    <a href="support.php" class="hover:text-[#0097D7]">
+    <a href="/support.php" class="hover:text-[#0097D7]">
       Support
     </a>
 
@@ -124,7 +90,7 @@ $firstName = trim(explode(" ", $name)[0] ?? '');
     </button>
 
     <!-- CURRENCY -->
-    <form method="POST" action="set-currency.php">
+    <form method="POST" action="/set-currency.php">
       <select name="currency"
         onchange="this.form.submit()"
         class="bg-transparent cursor-pointer
@@ -138,19 +104,19 @@ $firstName = trim(explode(" ", $name)[0] ?? '');
     </form>
 
     <?php if ($isLogged): ?>
-      <a href="logout.php"
+      <a href="/logout.php"
         class="px-3 py-2 rounded-lg
                bg-gray-100 dark:bg-gray-800
                hover:bg-gray-200 dark:hover:bg-gray-700">
         Logout
       </a>
     <?php else: ?>
-      <a href="login.php"
+      <a href="/login.php"
         class="px-4 py-2 bg-[#0097D7] text-white rounded-lg">
         Sign in
       </a>
 
-      <a href="register.php"
+      <a href="/register.php"
         class="px-4 py-2 rounded-lg border
                border-[#0097D7] text-[#0097D7]
                hover:bg-[#0097D7] hover:text-white transition">
