@@ -1,8 +1,5 @@
 <?php
 session_start();
-include 'sidebar.php';
-include 'header.php';
-?>
 
 /* =========================
    LOAD PREVIOUS SEARCH (IF ANY)
