@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
 
 $current = basename($_SERVER["PHP_SELF"]);
 $role = $_SESSION['user']['role'] ?? 'user';
