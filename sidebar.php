@@ -22,15 +22,18 @@ function activeClass($page, $current) {
               transition-transform duration-300
               -translate-x-full md:translate-x-0">
 
-    <!-- LOGO -->
-    <div class="px-6 pt-4 pb-2">
-        <a href="/index.php" class="block">
-            <img src="/banners/logo.jpg"
-                 alt="KAV+ Travel"
-                 class="h-24 w-auto object-contain"
-                 onerror="this.style.display='none'">
-        </a>
-    </div>
+   <!-- LOGO -->
+<div class="px-6 pt-4 pb-2">
+    <a href="/index.php" class="block">
+        <img
+            src="/banners/logo.jpg"
+            alt="KAV+ Travel"
+            class="h-20 w-auto object-contain"
+            loading="eager"
+        >
+    </a>
+</div>
+
 
     <!-- NAV -->
     <nav class="flex-1 px-4 py-4 text-sm space-y-1 overflow-y-auto">
