@@ -1,14 +1,27 @@
 <?php
+// -----------------------------
+// SESSION (MUST BE FIRST)
+// -----------------------------
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// -----------------------------
+// INCLUDE CURRENCY LOGIC EARLY
+// -----------------------------
+require_once __DIR__ . "/currency.php";
+
+// -----------------------------
+// USER STATE
+// -----------------------------
 $user     = $_SESSION['user'] ?? null;
 $isLogged = !empty($_SESSION['user_id']);
 $name     = $user['name'] ?? '';
 $role     = $user['role'] ?? 'user';
 
-/* Time greeting */
+// -----------------------------
+// TIME GREETING
+// -----------------------------
 $hour = (int) date('H');
 if ($hour >= 5 && $hour < 12)      $greeting = "Good morning";
 elseif ($hour < 17)               $greeting = "Good afternoon";
@@ -110,14 +123,13 @@ $firstName = trim(explode(" ", $name)[0] ?? '');
     </button>
 
     <!-- CURRENCY -->
-    <?php include_once "currency.php"; ?>
     <form method="POST" action="set-currency.php">
       <select name="currency"
         onchange="this.form.submit()"
         class="bg-transparent cursor-pointer
                text-gray-700 dark:text-gray-200">
-        <?php foreach ($CURRENCIES as $code=>$c): ?>
-          <option value="<?= $code ?>" <?= currency()===$code?'selected':'' ?>>
+        <?php foreach ($CURRENCIES as $code => $c): ?>
+          <option value="<?= $code ?>" <?= currency() === $code ? 'selected' : '' ?>>
             <?= $code ?>
           </option>
         <?php endforeach; ?>
@@ -125,7 +137,6 @@ $firstName = trim(explode(" ", $name)[0] ?? '');
     </form>
 
     <?php if ($isLogged): ?>
-      <!-- LOGOUT -->
       <a href="logout.php"
         class="px-3 py-2 rounded-lg
                bg-gray-100 dark:bg-gray-800
@@ -133,7 +144,6 @@ $firstName = trim(explode(" ", $name)[0] ?? '');
         Logout
       </a>
     <?php else: ?>
-      <!-- SIGN IN + REGISTER -->
       <a href="login.php"
         class="px-4 py-2 bg-[#0097D7] text-white rounded-lg">
         Sign in
@@ -150,7 +160,6 @@ $firstName = trim(explode(" ", $name)[0] ?? '');
   </div>
 </header>
 
-<!-- MOBILE SIDEBAR SCRIPT -->
 <script>
 (function () {
   const toggle = document.getElementById('sidebarToggle');
