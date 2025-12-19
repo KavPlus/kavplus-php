@@ -1,4 +1,5 @@
 <?php
+// Start session safely (must be before any HTML output)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -25,12 +26,12 @@ function activeClass($page, $current) {
               -translate-x-full md:translate-x-0">
 
     <!-- LOGO -->
-    <div class="px-6 pt-4 pb-2">
+    <div class="px-6 pt-4 pb-3 border-b border-gray-200 dark:border-gray-800">
         <a href="/index.php" class="block">
+            <!-- IMPORTANT: Use /banners/... so it works on ALL pages -->
             <img src="/banners/logo.jpg"
                  alt="KAV+ Travel"
-                 class="h-24 w-auto object-contain"
-                 onerror="this.style.display='none'">
+                 class="h-16 w-auto object-contain">
         </a>
     </div>
 
@@ -72,12 +73,12 @@ function activeClass($page, $current) {
                 Admin
             </div>
 
-            <a href="/admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="/admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="/admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="/admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="clipboard-list" class="w-5 h-5"></i>
                 <span>All Bookings</span>
             </a>
@@ -108,18 +109,26 @@ function activeClass($page, $current) {
 
     function applyTheme(theme) {
         document.documentElement.classList.toggle('dark', theme === 'dark');
-        icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
-        text.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
-        lucide.createIcons();
         localStorage.setItem('theme', theme);
+
+        if (icon && text && window.lucide) {
+            icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+            text.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+            lucide.createIcons();
+        }
     }
+
+    // Apply saved theme on load
+    const saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
 
     if (toggle) {
         toggle.addEventListener('click', () => {
-            applyTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(isDark ? 'light' : 'dark');
         });
     }
 
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
 })();
 </script>
