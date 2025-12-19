@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 /* =========================
    LOAD PREVIOUS SEARCH (IF ANY)

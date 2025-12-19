@@ -1,4 +1,11 @@
 <?php
+require_once __DIR__ . "/session.php";
+
+$user     = $_SESSION['user'] ?? null;
+$isLogged = !empty($_SESSION['user_id']);
+$name     = $user['name'] ?? '';
+$firstName = explode(' ', trim($name))[0] ?? '';
+?>
 
 // -----------------------------
 // INCLUDE CURRENCY LOGIC EARLY
