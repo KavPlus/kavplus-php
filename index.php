@@ -1,3 +1,8 @@
+<?php
+session_start();
+include 'sidebar.php';
+include 'header.php';
+?>
 <!DOCTYPE html> 
 <html>
 <head>
