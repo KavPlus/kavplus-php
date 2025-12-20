@@ -27,7 +27,7 @@ function activeClass($page, $current) {
     <div class="px-6 pt-4 pb-2">
         <a href="index.php" class="block">
             <img src="/banners/logo.jpg"
-                 alt="KAV+ Travel"
+                 alt=""
                  class="h-24 w-auto object-contain"
                  onerror="this.outerHTML='<div class=\'text-xl font-bold text-[#0097D7]\'>KAV+ Travel</div>'">
         </a>
