@@ -1,7 +1,4 @@
 <?php
-// currency.php
-// DO NOT session_start() here. session.php handles it.
-
 $CURRENCIES = [
   'GBP' => ['symbol' => '£', 'rate' => 1],
   'USD' => ['symbol' => '$', 'rate' => 1.27],

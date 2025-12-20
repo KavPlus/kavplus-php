@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/session.php";
+require_once 'session.php';
 ?>
 <?php include "sidebar.php"; ?>
 <?php include "header.php"; ?>
