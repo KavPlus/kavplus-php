@@ -1,19 +1,28 @@
 <?php
+// sidebar.php (FULL WORKING)
+
+// Start session safely BEFORE any output
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $current = basename($_SERVER["PHP_SELF"]);
-$role = $_SESSION['user']['role'] ?? 'user';
+$user = $_SESSION['user'] ?? [];
+$role = is_array($user) ? ($user['role'] ?? 'user') : 'user';
 
 function activeClass($page, $current) {
     return $page === $current
         ? "bg-[#0097D7]/15 text-[#0097D7] font-semibold"
         : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800";
 }
+
+// Root-relative logo path so it works on ALL pages (index, /Home/, etc.)
+$logoPath = "/banners/logo.jpg";
 ?>
 
 <!-- LUCIDE ICONS -->
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://unpkg.com/lucide@latest" defer></script>
 
-<!-- SIDEBAR -->
 <aside id="sidebar"
        class="fixed top-0 left-0 h-screen w-60
               bg-white dark:bg-gray-900
@@ -23,8 +32,8 @@ function activeClass($page, $current) {
 
     <!-- LOGO -->
     <div class="px-6 pt-4 pb-2">
-        <a href="index.php" class="block">
-            <img src="banners/logo.jpg"
+        <a href="/index.php" class="block">
+            <img src="<?= htmlspecialchars($logoPath) ?>"
                  alt="KAV+ Travel"
                  class="h-24 w-auto object-contain"
                  onerror="this.style.display='none'">
@@ -34,32 +43,32 @@ function activeClass($page, $current) {
     <!-- NAV -->
     <nav class="flex-1 px-4 py-4 text-sm space-y-1 overflow-y-auto">
 
-        <a href="flights.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('flights.php',$current) ?>">
+        <a href="/flights.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('flights.php',$current) ?>">
             <i data-lucide="plane" class="w-5 h-5"></i>
             <span>Flights</span>
         </a>
 
-        <a href="hotels.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('hotels.php',$current) ?>">
+        <a href="/hotels.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('hotels.php',$current) ?>">
             <i data-lucide="hotel" class="w-5 h-5"></i>
             <span>Hotels</span>
         </a>
 
-        <a href="tours.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('tours.php',$current) ?>">
+        <a href="/tours.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('tours.php',$current) ?>">
             <i data-lucide="map" class="w-5 h-5"></i>
             <span>Tours</span>
         </a>
 
-        <a href="deals.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('deals.php',$current) ?>">
+        <a href="/deals.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('deals.php',$current) ?>">
             <i data-lucide="flame" class="w-5 h-5"></i>
             <span>Deals</span>
         </a>
 
-        <a href="rewards.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('rewards.php',$current) ?>">
+        <a href="/rewards.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('rewards.php',$current) ?>">
             <i data-lucide="star" class="w-5 h-5"></i>
             <span>Rewards</span>
         </a>
 
-        <a href="support.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('support.php',$current) ?>">
+        <a href="/support.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('support.php',$current) ?>">
             <i data-lucide="headset" class="w-5 h-5"></i>
             <span>Support</span>
         </a>
@@ -69,12 +78,12 @@ function activeClass($page, $current) {
                 Admin
             </div>
 
-            <a href="admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="/admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="/admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="clipboard-list" class="w-5 h-5"></i>
                 <span>All Bookings</span>
             </a>
@@ -83,8 +92,7 @@ function activeClass($page, $current) {
 
     <!-- DARK MODE TOGGLE -->
     <div class="px-4 py-4 border-t border-gray-200 dark:border-gray-800">
-        <button id="darkToggle"
-                type="button"
+        <button id="darkToggle" type="button"
                 class="w-full flex items-center justify-between px-4 py-3
                        rounded-lg bg-gray-100 dark:bg-gray-800
                        text-gray-700 dark:text-gray-200
@@ -98,32 +106,39 @@ function activeClass($page, $current) {
 </aside>
 
 <script>
-/* ===============================
-   DARK MODE TOGGLE (SAFE)
-================================ */
-
 (function () {
+    function applyTheme(theme) {
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        try { localStorage.setItem('theme', theme); } catch(e) {}
+        // lucide might not be loaded yet (defer). retry a little.
+        if (window.lucide && lucide.createIcons) lucide.createIcons();
+    }
+
     const toggle = document.getElementById('darkToggle');
     const icon = document.getElementById('themeIcon');
     const text = document.getElementById('themeText');
 
-    function applyTheme(theme) {
-        document.documentElement.classList.toggle('dark', theme === 'dark');
+    function syncThemeUI() {
+        const isDark = document.documentElement.classList.contains('dark');
         if (icon && text) {
-            icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
-            text.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
-            lucide.createIcons();
+            icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+            text.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+            if (window.lucide && lucide.createIcons) lucide.createIcons();
         }
-        localStorage.setItem('theme', theme);
     }
 
     if (toggle) {
         toggle.addEventListener('click', () => {
             const isDark = document.documentElement.classList.contains('dark');
             applyTheme(isDark ? 'light' : 'dark');
+            syncThemeUI();
         });
     }
 
-    lucide.createIcons();
+    // after lucide loads
+    window.addEventListener('load', () => {
+        if (window.lucide && lucide.createIcons) lucide.createIcons();
+        syncThemeUI();
+    });
 })();
 </script>
