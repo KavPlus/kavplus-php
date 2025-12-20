@@ -1,8 +1,7 @@
 <?php
-// ❌ DO NOT start session here
-// Session is started once in index.php / page file via session.php
+require_once __DIR__ . '/session.php';
 
-$current = basename($_SERVER["PHP_SELF"]);
+$current = basename($_SERVER['PHP_SELF']);
 $role = $_SESSION['user']['role'] ?? 'user';
 
 function activeClass($page, $current) {
@@ -12,116 +11,75 @@ function activeClass($page, $current) {
 }
 ?>
 
-<!-- LUCIDE ICONS -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<!-- SIDEBAR -->
 <aside id="sidebar"
-       class="fixed top-0 left-0 h-screen w-60
-              bg-white dark:bg-gray-900
-              flex flex-col z-50
-              transition-transform duration-300
-              -translate-x-full md:translate-x-0">
+  class="fixed top-0 left-0 h-screen w-60
+         bg-white dark:bg-gray-900
+         flex flex-col z-50
+         transition-transform duration-300
+         -translate-x-full md:translate-x-0">
 
-    <!-- LOGO -->
-    <div class="px-6 pt-4 pb-2">
-        <a href="index.php" class="block">
-            <img src="/banners/logo.jpg"
-                 alt="KAV+ Travel"
-                 class="h-24 w-auto object-contain"
-                 onerror="this.outerHTML='<div class=\'text-xl font-bold text-[#0097D7]\'>KAV+ Travel</div>'">
-        </a>
-    </div>
+  <!-- LOGO -->
+  <div class="px-6 pt-4 pb-2">
+    <a href="/index.php">
+      <img src="/banners/logo.jpg"
+           alt="KAV+ Travel"
+           class="h-20 w-auto object-contain">
+    </a>
+  </div>
 
-    <!-- NAV -->
-    <nav class="flex-1 px-4 py-4 text-sm space-y-1 overflow-y-auto">
+  <!-- NAV -->
+  <nav class="flex-1 px-4 py-4 space-y-1 text-sm">
 
-        <a href="flights.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('flights.php',$current) ?>">
-            <i data-lucide="plane" class="w-5 h-5"></i>
-            <span>Flights</span>
-        </a>
+    <a href="flights.php" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= activeClass('flights.php',$current) ?>">
+      <i data-lucide="plane"></i> Flights
+    </a>
 
-        <a href="hotels.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('hotels.php',$current) ?>">
-            <i data-lucide="hotel" class="w-5 h-5"></i>
-            <span>Hotels</span>
-        </a>
+    <a href="hotels.php" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= activeClass('hotels.php',$current) ?>">
+      <i data-lucide="hotel"></i> Hotels
+    </a>
 
-        <a href="tours.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('tours.php',$current) ?>">
-            <i data-lucide="map" class="w-5 h-5"></i>
-            <span>Tours</span>
-        </a>
+    <a href="tours.php" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= activeClass('tours.php',$current) ?>">
+      <i data-lucide="map"></i> Tours
+    </a>
 
-        <a href="deals.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('deals.php',$current) ?>">
-            <i data-lucide="flame" class="w-5 h-5"></i>
-            <span>Deals</span>
-        </a>
+    <a href="deals.php" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= activeClass('deals.php',$current) ?>">
+      <i data-lucide="flame"></i> Deals
+    </a>
 
-        <a href="rewards.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('rewards.php',$current) ?>">
-            <i data-lucide="star" class="w-5 h-5"></i>
-            <span>Rewards</span>
-        </a>
+    <a href="rewards.php" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= activeClass('rewards.php',$current) ?>">
+      <i data-lucide="star"></i> Rewards
+    </a>
 
-        <a href="support.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('support.php',$current) ?>">
-            <i data-lucide="headset" class="w-5 h-5"></i>
-            <span>Support</span>
-        </a>
+    <a href="support.php" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= activeClass('support.php',$current) ?>">
+      <i data-lucide="headset"></i> Support
+    </a>
 
-        <?php if ($role === 'admin'): ?>
-            <div class="mt-6 mb-2 text-xs text-gray-400 dark:text-gray-500 px-4 uppercase tracking-wider">
-                Admin
-            </div>
+    <?php if ($role === 'admin'): ?>
+      <div class="mt-6 text-xs uppercase text-gray-400 px-4">Admin</div>
+      <a href="admin-dashboard.php" class="flex items-center gap-3 px-4 py-3 rounded-lg">
+        <i data-lucide="settings"></i> Dashboard
+      </a>
+    <?php endif; ?>
 
-            <a href="admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
-                <i data-lucide="settings" class="w-5 h-5"></i>
-                <span>Dashboard</span>
-            </a>
+  </nav>
 
-            <a href="admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
-                <i data-lucide="clipboard-list" class="w-5 h-5"></i>
-                <span>All Bookings</span>
-            </a>
-        <?php endif; ?>
-    </nav>
-
-    <!-- DARK MODE TOGGLE -->
-    <div class="px-4 py-4 border-t border-gray-200 dark:border-gray-800">
-        <button id="darkToggle"
-                type="button"
-                class="w-full flex items-center justify-between px-4 py-3
-                       rounded-lg bg-gray-100 dark:bg-gray-800
-                       text-gray-700 dark:text-gray-200
-                       hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-            <div class="flex items-center gap-2">
-                <i id="themeIcon" data-lucide="moon" class="w-4 h-4"></i>
-                <span id="themeText">Dark Mode</span>
-            </div>
-        </button>
-    </div>
+  <!-- DARK MODE -->
+  <div class="p-4 border-t">
+    <button id="darkToggle" class="w-full flex justify-between px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+      <span>Dark Mode</span>
+      <i data-lucide="moon"></i>
+    </button>
+  </div>
 </aside>
 
 <script>
-(function () {
-    const toggle = document.getElementById('darkToggle');
-    const icon = document.getElementById('themeIcon');
-    const text = document.getElementById('themeText');
-
-    function applyTheme(theme) {
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-        if (icon && text) {
-            icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
-            text.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
-            lucide.createIcons();
-        }
-        localStorage.setItem('theme', theme);
-    }
-
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            applyTheme(isDark ? 'light' : 'dark');
-        });
-    }
-
-    lucide.createIcons();
-})();
+lucide.createIcons();
+document.getElementById('darkToggle').onclick = () => {
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('theme',
+    document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  );
+};
 </script>
