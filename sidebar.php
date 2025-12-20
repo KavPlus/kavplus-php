@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/session.php';
+// ❌ DO NOT start session here
+// Session is started once in index.php / page file via session.php
 
 $current = basename($_SERVER["PHP_SELF"]);
 $role = $_SESSION['user']['role'] ?? 'user';
@@ -11,8 +12,10 @@ function activeClass($page, $current) {
 }
 ?>
 
+<!-- LUCIDE ICONS -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
+<!-- SIDEBAR -->
 <aside id="sidebar"
        class="fixed top-0 left-0 h-screen w-60
               bg-white dark:bg-gray-900
@@ -25,8 +28,8 @@ function activeClass($page, $current) {
         <a href="index.php" class="block">
             <img src="/banners/logo.jpg"
                  alt="KAV+ Travel"
-                 class="h-20 w-auto object-contain"
-                 onerror="this.outerHTML='<div class=&quot;text-xl font-bold text-[#0097D7]&quot;>KAV+ Travel</div>'">
+                 class="h-24 w-auto object-contain"
+                 onerror="this.outerHTML='<div class=\'text-xl font-bold text-[#0097D7]\'>KAV+ Travel</div>'">
         </a>
     </div>
 
@@ -68,12 +71,12 @@ function activeClass($page, $current) {
                 Admin
             </div>
 
-            <a href="admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="clipboard-list" class="w-5 h-5"></i>
                 <span>All Bookings</span>
             </a>
