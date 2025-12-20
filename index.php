@@ -1,3 +1,9 @@
+<?php
+require_once __DIR__ . "/session.php";
+?>
+<?php include "sidebar.php"; ?>
+<?php include "header.php"; ?>
+
 <!DOCTYPE html> 
 <html>
 <head>
