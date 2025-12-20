@@ -1,7 +1,6 @@
 <?php
-/* =========================
-   SUPPORTED CURRENCIES
-========================= */
+// currency.php
+// DO NOT session_start() here. session.php handles it.
 
 $CURRENCIES = [
   'GBP' => ['symbol' => '£', 'rate' => 1],
@@ -10,28 +9,18 @@ $CURRENCIES = [
   'INR' => ['symbol' => '₹', 'rate' => 105.4],
 ];
 
-/* =========================
-   CURRENT CURRENCY
-========================= */
-
-// session MUST already be started by header.php
 $currency = $_SESSION['currency'] ?? 'GBP';
-
 if (!isset($CURRENCIES[$currency])) {
   $currency = 'GBP';
 }
 
-/* =========================
-   HELPERS
-========================= */
-
-function price(float $amount): string {
+function price($amount) {
   global $CURRENCIES, $currency;
   $converted = $amount * $CURRENCIES[$currency]['rate'];
   return $CURRENCIES[$currency]['symbol'] . number_format($converted, 2);
 }
 
-function currency(): string {
+function currency() {
   global $currency;
   return $currency;
 }
