@@ -33,13 +33,14 @@ if ($BASE === '/' || $BASE === '\\') $BASE = '';
 
     <!-- LOGO -->
     <div class="px-6 pt-4 pb-2">
-        <a href="<?= $BASE ?>/index.php" class="block">
-            <img src="/banners/logo.jpg"
-            alt="KAV+ Travel"
-            class="h-24 w-auto object-contain"
-            onerror="this.style.display='none'">
+        <a href="/index.php" class="block">
+            <img src="<?= htmlspecialchars($logoPath) ?>"
+                 alt="KAV+ Travel"
+                 class="h-24 w-auto object-contain"
+                 onerror="this.style.display='none'">
         </a>
     </div>
+
 
     <!-- NAV -->
     <nav class="flex-1 px-4 py-4 text-sm space-y-1 overflow-y-auto">
