@@ -34,10 +34,10 @@ if ($BASE === '/' || $BASE === '\\') $BASE = '';
     <!-- LOGO -->
     <div class="px-6 pt-4 pb-2">
         <a href="<?= $BASE ?>/index.php" class="block">
-            <img src="<?= $BASE ?>/banners/logo.jpg"
-                 alt="KAV+ Travel"
-                 class="h-24 w-auto object-contain"
-                 onerror="this.style.display='none'">
+            <img src="/banners/logo.jpg"
+            alt="KAV+ Travel"
+            class="h-24 w-auto object-contain"
+            onerror="this.style.display='none'">
         </a>
     </div>
 

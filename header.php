@@ -2,27 +2,51 @@
 require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/currency.php';
 
-$user = $_SESSION['user'] ?? null;
+$user     = $_SESSION['user'] ?? null;
 $isLogged = !empty($_SESSION['user_id']);
-$name = $user['name'] ?? '';
-$firstName = explode(' ', trim($name))[0] ?? '';
+$name     = $user['name'] ?? '';
+$role     = $user['role'] ?? 'user';
+
+$hour = (int) date('H');
+if ($hour >= 5 && $hour < 12)      $greeting = "Good morning";
+elseif ($hour < 17)               $greeting = "Good afternoon";
+elseif ($hour < 22)               $greeting = "Good evening";
+else                              $greeting = "Good night";
+
+$firstName = trim(explode(" ", $name)[0] ?? '');
 ?>
 
+<!-- EARLY THEME -->
 <script>
-if (localStorage.getItem('theme') === 'dark') {
-  document.documentElement.classList.add('dark');
-}
+(function () {
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+})();
 </script>
 
 <header class="fixed top-0 left-0 right-0 md:left-60 h-16 md:h-20
-               bg-white dark:bg-gray-900 border-b shadow z-40
-               flex items-center justify-between px-6">
+               bg-white dark:bg-gray-900 border-b border-gray-200
+               dark:border-gray-700 shadow-sm z-40
+               flex items-center justify-between px-4 md:px-8">
 
   <!-- LEFT -->
   <div class="flex items-center gap-3">
-    <button id="sidebarToggle" class="md:hidden">☰</button>
-    <input class="hidden md:block w-80 px-4 py-2 rounded-full bg-gray-100"
-           placeholder="Destination, attraction, hotel">
+
+    <button id="sidebarToggle" class="md:hidden text-xl">☰</button>
+
+    <!-- LOGO (TEXT FALLBACK) -->
+    <a href="index.php" class="flex items-center gap-2">
+      <img src="/banners/logo.jpg"
+           alt="KAV+ Travel"
+           class="h-8"
+           onerror="this.style.display='none'">
+      <span class="font-bold text-[#0097D7]">KAV+ Travel</span>
+    </a>
+
+    <input type="text"
+      placeholder="Destination, attraction, hotel"
+      class="hidden md:block w-80 px-4 py-2 rounded-full bg-gray-100 dark:bg-gray-800">
   </div>
 
   <!-- RIGHT -->
@@ -31,14 +55,12 @@ if (localStorage.getItem('theme') === 'dark') {
     <a href="support.php">Support</a>
 
     <!-- APP BUTTON (RESTORED) -->
-    <button onclick="window.location.href='app-download.php'" title="Download App">
-      📱
-    </button>
+    <button title="Get App" class="hover:text-[#0097D7]">📱</button>
 
     <!-- CURRENCY -->
     <form method="POST" action="set-currency.php">
       <select name="currency" onchange="this.form.submit()">
-        <?php foreach ($CURRENCIES as $code => $v): ?>
+        <?php foreach ($CURRENCIES as $code => $c): ?>
           <option value="<?= $code ?>" <?= currency()===$code?'selected':'' ?>>
             <?= $code ?>
           </option>
@@ -47,17 +69,19 @@ if (localStorage.getItem('theme') === 'dark') {
     </form>
 
     <?php if ($isLogged): ?>
-      <span>Hello, <?= htmlspecialchars($firstName) ?></span>
       <a href="logout.php">Logout</a>
     <?php else: ?>
-      <a href="login.php" class="bg-[#0097D7] text-white px-3 py-2 rounded">Sign in</a>
-      <a href="register.php" class="border px-3 py-2 rounded">Register</a>
+      <a href="login.php" class="px-3 py-2 bg-[#0097D7] text-white rounded">Sign in</a>
+      <a href="register.php" class="px-3 py-2 border rounded">Register</a>
     <?php endif; ?>
+
   </div>
 </header>
 
 <script>
-document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('-translate-x-full');
-});
+(function () {
+  const t = document.getElementById('sidebarToggle');
+  const s = document.getElementById('sidebar');
+  if (t && s) t.onclick = () => s.classList.toggle('-translate-x-full');
+})();
 </script>
