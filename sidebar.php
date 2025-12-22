@@ -28,7 +28,7 @@ if ($BASE === '/' || $BASE === '\\') {
    LOGO PATH (FIX)
    This MUST be absolute
 ========================= */
-$logoPath = $BASE . '/banners/logo.jpg';
+$logoPath = $BASE . 'banners/logo.jpg';
 ?>
 <!-- LUCIDE ICONS -->
 <script src="https://unpkg.com/lucide@latest"></script>
