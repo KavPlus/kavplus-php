@@ -17,7 +17,7 @@ function activeClass($page, $current) {
 }
 
 /* =========================
-   BASE PATH (Render-safe)
+   BASE PATH (for PHP pages)
 ========================= */
 $BASE = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
 if ($BASE === '/' || $BASE === '\\') {
@@ -25,11 +25,11 @@ if ($BASE === '/' || $BASE === '\\') {
 }
 
 /* =========================
-   LOGO PATH (FIX)
-   This MUST be absolute
+   LOGO PATH (RELATIVE – FIXED)
 ========================= */
-$logoPath = $BASE . 'banners/logo.jpg';
+$logoPath = 'banners/logo.jpg';
 ?>
+
 <!-- LUCIDE ICONS -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -44,11 +44,12 @@ $logoPath = $BASE . 'banners/logo.jpg';
     <!-- LOGO -->
     <div class="px-6 pt-4 pb-2">
         <a href="<?= $BASE ?>/index.php" class="block">
-            <img src="<?= htmlspecialchars($logoPath) ?>"
-                 alt="KAV+ Travel"
-                 class="h-24 w-auto object-contain"
-                 loading="lazy"
-                 onerror="this.style.display='none'">
+            <img
+                src="<?= htmlspecialchars($logoPath) ?>"
+                alt="KAV+ Travel"
+                class="h-24 w-auto object-contain"
+                loading="lazy"
+                onerror="this.style.display='none'">
         </a>
     </div>
 
@@ -97,27 +98,26 @@ $logoPath = $BASE . 'banners/logo.jpg';
             </div>
 
             <a href="<?= $BASE ?>/admin-dashboard.php"
-               class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+               class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 <span>Dashboard</span>
             </a>
 
             <a href="<?= $BASE ?>/admin-bookings.php"
-               class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+               class="group flex items-center gap-3 px-4 py-3 rounded-lg transition hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="clipboard-list" class="w-5 h-5"></i>
                 <span>All Bookings</span>
             </a>
         <?php endif; ?>
     </nav>
 
-    <!-- DARK MODE TOGGLE -->
+    <!-- DARK MODE -->
     <div class="px-4 py-4 border-t border-gray-200 dark:border-gray-800">
         <button id="darkToggle"
                 type="button"
                 class="w-full flex items-center justify-between px-4 py-3
                        rounded-lg bg-gray-100 dark:bg-gray-800
-                       text-gray-700 dark:text-gray-200
-                       hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                       text-gray-700 dark:text-gray-200">
             <div class="flex items-center gap-2">
                 <i id="themeIcon" data-lucide="moon" class="w-4 h-4"></i>
                 <span id="themeText">Dark Mode</span>
@@ -134,20 +134,17 @@ $logoPath = $BASE . 'banners/logo.jpg';
 
     function applyTheme(theme) {
         document.documentElement.classList.toggle('dark', theme === 'dark');
-        if (icon && text) {
-            icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
-            text.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
-            lucide.createIcons();
-        }
+        icon.setAttribute('data-lucide', theme === 'dark' ? 'sun' : 'moon');
+        text.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        lucide.createIcons();
         localStorage.setItem('theme', theme);
     }
 
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            applyTheme(isDark ? 'light' : 'dark');
-        });
-    }
+    toggle.addEventListener('click', () => {
+        applyTheme(
+            document.documentElement.classList.contains('dark') ? 'light' : 'dark'
+        );
+    });
 
     lucide.createIcons();
 })();
