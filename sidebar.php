@@ -1,25 +1,35 @@
 <?php
 require_once __DIR__ . '/session.php';
 
+/* =========================
+   USER / PAGE STATE
+========================= */
 $current = basename($_SERVER["PHP_SELF"]);
 $role = $_SESSION['user']['role'] ?? 'user';
 
+/* =========================
+   ACTIVE LINK HELPER
+========================= */
 function activeClass($page, $current) {
     return $page === $current
         ? "bg-[#0097D7]/15 text-[#0097D7] font-semibold"
         : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800";
 }
 
-/**
- * Base URL (works if project is hosted in a subfolder on Render)
- * Example:
- *  - /index.php              => base = ""
- *  - /kavplus-php/index.php   => base = "/kavplus-php"
- */
+/* =========================
+   BASE PATH (Render-safe)
+========================= */
 $BASE = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/\\');
-if ($BASE === '/' || $BASE === '\\') $BASE = '';
-?>
+if ($BASE === '/' || $BASE === '\\') {
+    $BASE = '';
+}
 
+/* =========================
+   LOGO PATH (FIX)
+   This MUST be absolute
+========================= */
+$logoPath = $BASE . '/banners/logo.jpg';
+?>
 <!-- LUCIDE ICONS -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -33,44 +43,50 @@ if ($BASE === '/' || $BASE === '\\') $BASE = '';
 
     <!-- LOGO -->
     <div class="px-6 pt-4 pb-2">
-        <a href="/index.php" class="block">
+        <a href="<?= $BASE ?>/index.php" class="block">
             <img src="<?= htmlspecialchars($logoPath) ?>"
                  alt="KAV+ Travel"
                  class="h-24 w-auto object-contain"
+                 loading="lazy"
                  onerror="this.style.display='none'">
         </a>
     </div>
 
-
     <!-- NAV -->
     <nav class="flex-1 px-4 py-4 text-sm space-y-1 overflow-y-auto">
 
-        <a href="<?= $BASE ?>/flights.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('flights.php',$current) ?>">
+        <a href="<?= $BASE ?>/flights.php"
+           class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('flights.php',$current) ?>">
             <i data-lucide="plane" class="w-5 h-5"></i>
             <span>Flights</span>
         </a>
 
-        <a href="<?= $BASE ?>/hotels.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('hotels.php',$current) ?>">
+        <a href="<?= $BASE ?>/hotels.php"
+           class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('hotels.php',$current) ?>">
             <i data-lucide="hotel" class="w-5 h-5"></i>
             <span>Hotels</span>
         </a>
 
-        <a href="<?= $BASE ?>/tours.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('tours.php',$current) ?>">
+        <a href="<?= $BASE ?>/tours.php"
+           class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('tours.php',$current) ?>">
             <i data-lucide="map" class="w-5 h-5"></i>
             <span>Tours</span>
         </a>
 
-        <a href="<?= $BASE ?>/deals.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('deals.php',$current) ?>">
+        <a href="<?= $BASE ?>/deals.php"
+           class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('deals.php',$current) ?>">
             <i data-lucide="flame" class="w-5 h-5"></i>
             <span>Deals</span>
         </a>
 
-        <a href="<?= $BASE ?>/rewards.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('rewards.php',$current) ?>">
+        <a href="<?= $BASE ?>/rewards.php"
+           class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('rewards.php',$current) ?>">
             <i data-lucide="star" class="w-5 h-5"></i>
             <span>Rewards</span>
         </a>
 
-        <a href="<?= $BASE ?>/support.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('support.php',$current) ?>">
+        <a href="<?= $BASE ?>/support.php"
+           class="group flex items-center gap-3 px-4 py-3 rounded-lg transition <?= activeClass('support.php',$current) ?>">
             <i data-lucide="headset" class="w-5 h-5"></i>
             <span>Support</span>
         </a>
@@ -80,12 +96,14 @@ if ($BASE === '/' || $BASE === '\\') $BASE = '';
                 Admin
             </div>
 
-            <a href="<?= $BASE ?>/admin-dashboard.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="<?= $BASE ?>/admin-dashboard.php"
+               class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 <span>Dashboard</span>
             </a>
 
-            <a href="<?= $BASE ?>/admin-bookings.php" class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <a href="<?= $BASE ?>/admin-bookings.php"
+               class="group flex items-center gap-3 px-4 py-3 rounded-lg transition text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <i data-lucide="clipboard-list" class="w-5 h-5"></i>
                 <span>All Bookings</span>
             </a>
